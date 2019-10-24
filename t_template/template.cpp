@@ -1,7 +1,8 @@
 #include <iostream>
 using namespace std;
-
 #include <assert.h>
+//非类型模板参数
+//C++11：array
 namespace My
 {
   template<class T,size_t N>
