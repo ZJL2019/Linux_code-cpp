@@ -51,6 +51,7 @@ int main()
 }
 #endif
 
+#if 0
 
 #include <string.h>
 template<class T>
@@ -68,7 +69,7 @@ T& Max(T& left,T& right)
 //}
 //函数模板一般不需要特化，直接将不能处理类型的具体函数给出
 
-#if 0
+
 char* Max(char* left,char* right)
 {
   if(strcmp(left,right)>0)
@@ -77,6 +78,8 @@ char* Max(char* left,char* right)
 }
 #endif
 
+
+#if 0
 class Date
 {
   public:
@@ -124,4 +127,150 @@ int main()
   //在没有使用模板特化时，输出与正常不符为hello
   return 0;
 }
+#endif
+
+#if 0
+template<class T>
+void Test(const T& p)//const int* &p(错误) int* & p const p
+  //const修饰p的值而不是p的执行
+{
+  *p =100;
+  int b=20;
+  *p=b;
+  //p=&b;
+  
+}
+
+int main()
+{
+  int a=10;
+  int* pa=&a;
+  
+  const int b1=10;
+  int const b2=20;
+
+  Test(pa);
+  return 0;
+}
+#endif
+
+
+#if 0
+template<class T1,class T2>
+class Data
+{
+  public:
+    Data()
+    {
+      cout<<"Data<T1,T2>"<<endl;
+    }
+
+  private:
+    T1 _d1;
+    T2 _d2;
+};
+
+//全特化----对所有类型参数进行特化
+template<>
+class Data<int,int>
+{
+  public:
+    Data()
+    {
+      cout<<"Data<int,int>"<<endl;
+    }
+  private:
+    int _d1;
+    int _d2;
+};
+
+int main()
+{
+  Data<int,double>d1;
+  Data<int,int>d2;
+  //全特化中，对象实例化若匹配全特化参数，则调用全特化的类模板
+  return 0;
+}
+#endif
+
+#if 0
+template<class T1,class T2>
+class Data
+{
+  public:
+    Data()
+    {
+      cout<<"Data<T1,T2>"<<endl;
+    }
+  private:
+    T1 _d1;
+    T2 _d2;
+};
+
+//偏特化：部分特化--->将模板参数列表中部分参数类型化
+template<class T1>
+class Data<T1,int>
+{
+  public:
+    Data()
+    {
+      cout<<"Data<T1,int>"<<endl;
+    }
+  private:
+    T1 _d1;
+    int _d2;
+};
+
+int main()
+{
+  Data<int,double> d1;
+  Data<int,int> d2;
+  Data<double,int> d3;
+  //在偏特化中，实例化对象时，若参数满足偏特化对应参数，则调用偏特化类模板
+  return 0;
+}
+#endif
+
+
+
+template<class T1,class T2>
+class Data
+{
+  public:
+    Data()
+    {
+      cout<<"Data <T1,T2>"<<endl;
+    }
+  private:
+    T1 _d1;
+    T2 _d2;
+};
+
+//偏特化：让模板参数列表中的类型限制更加严格
+template<class T1,class T2>
+class Data<T1*,T2*>
+{
+  public:
+    Data()
+    {
+      cout<<"Data<T1*,T2*>"<<endl;
+    }
+  private:
+    T1* _d1;
+    T2* _d2;
+};
+
+int main()
+{
+  Data<int*,int> d1;
+  Data<int,int*> d2;
+  Data<int*,int*> d3;
+  Data<int*,double*> d4;
+  return 0;
+}
+
+
+
+
+
 
