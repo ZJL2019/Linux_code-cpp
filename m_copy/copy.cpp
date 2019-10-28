@@ -1,6 +1,7 @@
 #include<iostream>
 using namespace std;
 #include <string.h>
+#include <typeinfo>
 class String
 {
   public:
@@ -55,7 +56,7 @@ void Copy1(T* dst,T* src,size_t size)
 //优点：一定不会出错
 //缺陷：O(N)
 
-template<class>
+template<class T>
 void Copy2(T* dst,T* src,size_t size)
 {
   for(size_t i=0;i<size;i++)
@@ -64,5 +65,52 @@ void Copy2(T* dst,T* src,size_t size)
   }
 }
 
+bool IsPODType(const char* strType)
+{
+  //此处可以将所有的内置类型枚举出来
+  const char* strTypes[]={"c","s","i","l","x","f","d"};
+  for(auto e : strTypes)
+ {
+   if(strcmp(strType,e)==0)
+   {
+     return true;
+   }
+ }
+ return false;
+}
 
+template<class T>
+void Copy(T* dst,T* src,size_t size)
+{
+  //通过typeid可以将T的实际类型按照字符串的方式返回
+  if(IsPODType(typeid(T).name()))
+  {
+    // T的类型：内置
+    memcpy(dst,src,sizeof(T)*size);
+  }
+  else
+  {
+    for(size_t i=0;i<size;i++)
+    {
+      dst[i]=src[i];
+    }
+  }
+}
+
+void TestCopy()
+{ 
+  int array1[]={1,2,3,4,5,6,7,8,9,0};
+  int array2[10];
+  Copy(array2,array1,10);
+
+  String s1[3]={"1111","2222","3333"};
+  String s2[3];
+  Copy(s2,s1,3);
+}
+
+int main()
+{
+  TestCopy();
+  return 0;
+}
 
