@@ -2,6 +2,7 @@
 using namespace std;
 #include <string.h>
 #include <typeinfo>
+#if 0
 class String
 {
   public:
@@ -113,4 +114,124 @@ int main()
   TestCopy();
   return 0;
 }
+#endif
+
+
+class String
+{
+public:
+  String(const char* str="")
+  {
+    if(nullptr==str)
+    {
+      str="";
+    }
+    _str=new char[strlen(str)+1];
+    strcpy(_str,str);
+  }
+
+  String(const String& s)
+    :_str(new char[strlen(s._str)+1])
+  {
+    strcpy(_str,s._str);
+  }
+
+  String& operator=(const String& s)
+  {
+    if(this!=&s)
+    {
+      char* str=new char [strlen(s._str)+1];
+      strcpy(str,s._str);
+      delete[] _str;
+      _str=str;
+    }
+    return *this;
+  }
+
+  ~String()
+  {
+    delete [] _str;
+  }
+
+
+private:
+  char* _str;
+};
+
+
+//确认T到底是否为内置类型？
+//是
+//不是
+
+//对应内置类型
+struct TrueType
+{};
+
+//对应自定义类型
+struct FalseType
+{};
+
+template<class T>
+struct TypeTraits
+{
+    typedef FalseType PODTYPE;
+};
+
+template<>
+struct TypeTraits<char>
+{
+    typedef TrueType PODTYPE;
+};
+
+template<>
+struct TypeTraits<short>
+{
+  typedef TrueType PODTYPE;
+};
+
+template<>
+struct TypeTraits<int>
+{
+  typedef  TrueType PODTYPE;
+};
+
+template<class T>
+void Copy(T* dst,T* src,size_t size,TrueType)
+{
+  memcpy(dst,src,sizeof(T)*size);
+}
+
+template<class T>
+void Copy(T* dst,T* src,size_t size,FalseType)
+{
+  for(size_t i=0;i<size;i++)
+  {
+    dst[i]=src[i];
+  }
+}
+
+
+template<class T>
+void Copy(T* dst,T* src,size_t size)
+{
+  Copy(dst,src,size,typename TypeTraits<T>::PODTYPE());
+}
+
+void TestCopy()
+{
+  int array1[]={1,2,3,4,5,6,7,8,9,0};
+  int array2[10];
+  Copy(array2,array1,10);
+
+  String s1[3]={"1111","2222","3333"};
+  String s2[3];
+  Copy(s2,s1,3);
+}
+
+int main()
+{
+  TestCopy();
+  return 0;
+}
+
 
