@@ -1153,6 +1153,7 @@ int main()
 }
 #endif
 
+#if 0
 class B
 {
   public:
@@ -1193,7 +1194,13 @@ int main()
   d._d=5;
   return 0;
 }
+#endif
 
+class B
+{
+  public:
+    int _b;
+};
 
 
 
