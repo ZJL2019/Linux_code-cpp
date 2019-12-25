@@ -13,7 +13,7 @@ int main()
     {
         perror("fork");
     }
-    //不写只读
+    //只读不写
     
     //else if(pid==0)
     //{
