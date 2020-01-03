@@ -10,9 +10,14 @@ void sigcallback(int sig)
     printf("sig:%d\n",sig);
 }
 
+void sigcallback1(int sig)
+{
+    printf("sig:%d\n",sig);
+}
+
 int main()
 {
-    signal(2,sigcallback);
+    signal(2,sigcallback1);
     
     int count=100;
     while(count--)
