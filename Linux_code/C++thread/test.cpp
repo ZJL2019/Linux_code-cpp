@@ -1,8 +1,7 @@
 #include <pthread.h>
 #include <unistd.h>
-#include <stdio.h>
 #include <iostream>
-
+#include <stdio.h>
 class Mythread
 {
     public:
