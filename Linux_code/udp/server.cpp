@@ -52,7 +52,7 @@ int main()
         //b)根据请求计算响应
         // 此处写的是一个回显服务器
         //c)把响应写回客户端
-        sndto(sock,buf,strlen(buf),0,(sockaddr*)&peer,len);
+        sendto(sock,buf,strlen(buf),0,(sockaddr*)&peer,len);
         if(n < 0)
         {
             perror("sendto");
