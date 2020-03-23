@@ -40,13 +40,13 @@ int main(int argc,char* argv[])
         //std::string header=ss.str();
         
 
-        //std::string body="<html><body><h1>Hello World</h1><body></html>";
-        //std::stringstream ss;
-        //ss<<"HTTP/1.1 302 Found\r\n";
-        //ss<<"Content-Length:"<<body.size()<<"\r\n";
-        //ss<<"Content-Type:text/html\r\n";
-        //ss<<"Location:https://www.baidu.com\r\n";
-        //ss<<"\r\n";
+        std::string body="<html><body><h1>Hello World</h1><body></html>";
+        std::stringstream ss;
+        ss<<"HTTP/1.1 302 Found\r\n";
+        ss<<"Content-Length:"<<body.size()<<"\r\n";
+        ss<<"Content-Type:text/html\r\n";
+        ss<<"Location:https://www.baidu.com\r\n";
+        ss<<"\r\n";
         
         std::string header=ss.str();
         peets.Send(header);
