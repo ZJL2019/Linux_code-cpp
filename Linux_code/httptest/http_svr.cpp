@@ -47,7 +47,8 @@ int main(int argc,char* argv[])
         ss<<"Content-Type:text/html\r\n";
         ss<<"Location:https://www.baidu.com\r\n";
         ss<<"\r\n";
-        
+       
+
         std::string header=ss.str();
         peets.Send(header);
         peets.Send(body);
