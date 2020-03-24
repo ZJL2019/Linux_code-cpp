@@ -53,7 +53,7 @@ class OjModel
            while(std::getline(file,line))
            {
                std::vector<std::string> vec;
-               StringTools::Split(line,"\t",&vec); //切割题目内容信息
+               StringTools::Split(line," ",&vec); //切割题目内容信息
                if(vec.size()!=4)
                {
                    continue;
