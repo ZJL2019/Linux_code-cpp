@@ -46,7 +46,7 @@ enum LogLevel
     DEBUG
 };
 
-inline void Log(LogLevel lev,const char* file,int line,std::string& logmsg)
+inline void Log(LogLevel lev,const char* file,int line,const std::string& logmsg)
 {
 
     std::string level_info=Level[lev];
@@ -60,7 +60,7 @@ inline void Log(LogLevel lev,const char* file,int line,std::string& logmsg)
         return ;
     }
     log_file<<"["<<TimeStamp<<" "<<level_info<<" "<<file<<":"<<line<<"]"<<std::endl<<logmsg<<std::endl;
-    log_file<<"-------------------------------------------------------------------------------------------------------------"<<std::endl;
+    log_file<<"--------------------------------------------------------"<<std::endl;
     log_file.close();
 }
 
