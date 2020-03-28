@@ -10,7 +10,7 @@
 #include <algorithm>
 
 #include "oj_tools.hpp"
-
+#include "oj_log.hpp"
 typedef struct Topic  //组织题目结构
 {
     std::string id_;
@@ -26,7 +26,7 @@ class OjModel
         {
             if(!LoadTopic("./config_oj.cfg"))
             {
-                std::cout<<"配置文件加载失败！"<<std::endl;
+                LOG(ERROR,"Loading failed!");
             }
         }
 
@@ -42,13 +42,45 @@ class OjModel
                     }); 
             return true;
         }
+        
+        bool GetOneTopic(const std::string& id,std::string* desc,std::string* header,Topic* topic)
+        {
+            auto iter=model_map_.find(id);
+            if(iter==model_map_.end())
+            {
+                std::string tmp;
+                tmp+="Not found topic id is"+id;
+                LOG(ERROR,tmp);
+                return false;
+            }
+            *topic=iter->second;
+
+            int ret=FileOper::ReadDateFromFile(DescPath(iter->second.path_),desc);
+            if(ret==-1)
+            {
+                LOG(ERROR,"Read desc failed");
+                return false;
+            }
+
+            ret=FileOper::ReadDateFromFile(HeaderPath(iter->second.path_),header);
+            if(ret==-1)
+            {
+                LOG(ERROR,"Read header failed");
+                return false;
+            }
+            return true;
+        }
 
     private:
        bool LoadTopic(const std::string& configfile_path) //加载题目文件内容
        {
            std::ifstream file(configfile_path.c_str());
-           CHECK_RET(file.is_open());
-
+           if(!file.is_open())
+           {
+               std::string tmp;
+               tmp+="Loading open failed topic_path is"+configfile_path;
+               LOG(ERROR,tmp);
+           }
            std::string line;
            while(std::getline(file,line))
            {
@@ -69,6 +101,17 @@ class OjModel
            file.close();
            return true;
        }
+       
+       std::string DescPath(const std::string& ques_path)
+       {
+           return ques_path+"desc.txt";
+       }
+
+       std::string HeaderPath(const std::string& ques_path)
+       {
+           return ques_path+"header.cpp";
+       }
+
     private:
         std::unordered_map<std::string,Topic> model_map_;
 };
