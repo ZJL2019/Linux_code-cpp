@@ -49,25 +49,46 @@ class OjModel
             if(iter==model_map_.end())
             {
                 std::string tmp;
-                tmp+="Not found topic id is"+id;
+                tmp+="Not found topic id is "+id;
                 LOG(ERROR,tmp);
                 return false;
             }
             *topic=iter->second;
 
             int ret=FileOper::ReadDateFromFile(DescPath(iter->second.path_),desc);
-            if(ret==-1)
+            if(ret < 0)
             {
                 LOG(ERROR,"Read desc failed");
                 return false;
             }
 
             ret=FileOper::ReadDateFromFile(HeaderPath(iter->second.path_),header);
-            if(ret==-1)
+            if(ret < 0)
             {
                 LOG(ERROR,"Read header failed");
                 return false;
             }
+            return true;
+        }
+
+        bool SplicingCode(std::string user_code,const std::string& ques_id,std::string* code)
+        {
+            auto iter=model_map_.find(ques_id);
+            if(iter==model_map_.end())
+            {
+                std::string tmp="Can't finn question id is "+ques_id;
+                LOG(ERROR,tmp);
+                return false;
+            }
+            
+            std::string tail_code;
+            int ret=FileOper::ReadDateFromFile(TailPath(iter->second.path_),&tail_code);
+            if(ret < 0)
+            {
+                LOG(ERROR,"Open tail.cpp failed!");
+                return false;
+            }
+            *code=user_code+tail_code;
             return true;
         }
 
@@ -78,7 +99,7 @@ class OjModel
            if(!file.is_open())
            {
                std::string tmp;
-               tmp+="Loading open failed topic_path is"+configfile_path;
+               tmp+="Loading open failed topic_path is "+configfile_path;
                LOG(ERROR,tmp);
            }
            std::string line;
@@ -110,6 +131,11 @@ class OjModel
        std::string HeaderPath(const std::string& ques_path)
        {
            return ques_path+"header.cpp";
+       }
+
+       std::string TailPath(const std::string& ques_path)
+       {
+           return ques_path+"tail.cpp";
        }
 
     private:

@@ -16,7 +16,7 @@ class OJ_View
                 section_dict->SetValue("name",tpc.name_);
                 section_dict->SetValue("star",tpc.star_);
             }
-            ctemplate::Template* tl=ctemplate::Template::GetTemplate("./html_template/all_questions.html",ctemplate::DO_NOT_STRIP);
+            ctemplate::Template* tl=ctemplate::Template::GetTemplate("../src/html_template/all_questions.html",ctemplate::DO_NOT_STRIP);
             tl->Expand(html,&dict);
         }
         
@@ -28,7 +28,19 @@ class OJ_View
             dict.SetValue("star",topic.star_);
             dict.SetValue("desc",desc);
             dict.SetValue("header",header);
-            ctemplate::Template* tpl=ctemplate::Template::GetTemplate("./html_template/question.html",ctemplate::DO_NOT_STRIP);
+            ctemplate::Template* tpl=ctemplate::Template::GetTemplate("../src/html_template/question.html",ctemplate::DO_NOT_STRIP);
+            tpl->Expand(html,&dict);
+        }
+
+        static void ExpandReason(const std::string& errorno,const std::string& reason,const std::string&stdout_reason,const std::string& stderr_reason,std::string* html)
+        {
+            ctemplate::TemplateDictionary dict("reason");
+            dict.SetValue("errorno",errorno); 
+            dict.SetValue("reason",reason);
+            dict.SetValue("stdout",stdout_reason);
+            dict.SetValue("stderr",stderr_reason);
+            
+            ctemplate::Template* tpl=ctemplate::Template::GetTemplate("../src/html_template/reason.html",ctemplate::DO_NOT_STRIP);
             tpl->Expand(html,&dict);
         }
 };
