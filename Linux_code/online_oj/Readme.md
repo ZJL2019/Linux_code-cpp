@@ -20,7 +20,7 @@ ctemplate库
 客户端：
 		
 
-![](https://github.com/ZJL2019/Linux_code-cpp/raw/master/Linux_code/online_oj/批注_2020-03-20_124425.jpg)
+![](https://github.com/ZJL2019/Linux_code-cpp/raw/master/Linux_code/online_oj/批注_2020-03-20_124527.jpg)
 
 细分需求：
 
