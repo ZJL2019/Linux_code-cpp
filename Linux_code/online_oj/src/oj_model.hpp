@@ -24,7 +24,7 @@ class OjModel
     public:
         OjModel()
         {
-            if(!LoadTopic("./config_oj.cfg"))
+            if(!LoadTopic("../src/config_oj.cfg"))
             {
                 LOG(ERROR,"Loading failed!");
             }
