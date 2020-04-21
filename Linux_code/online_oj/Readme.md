@@ -20,7 +20,7 @@ ctemplate库
 客户端：
 		
 
-![](./批注 2020-03-20 124527.jpg)
+![](https://github.com/ZJL2019/Linux_code-cpp/raw/master/Linux_code/online_oj/批注_2020-03-20_124527.jpg)
 
 细分需求：
 
@@ -49,7 +49,7 @@ OJ_server流程：
 
 四、模块划分
 
-![](./批注 2020-03-20 124425.jpg)
+![](https://github.com/ZJL2019/Linux_code-cpp/raw/master/Linux_code/online_oj/批注_2020-03-20_124425.jpg)
 
 五、模块功能
 
